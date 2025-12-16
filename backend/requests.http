@@ -1,0 +1,15 @@
+###
+POST http://localhost:8080/api/agendamentos
+Content-type: application/json
+
+{
+  "title": "Consulta Cardiologia",
+  "description": "Consulta de rotina para check-up cardíaco",
+  "date": "2025-12-20",
+  "startTime": "14:00:00",
+  "endTime": "15:00:00",
+  "patient": "João da Silva",
+  "doctor": "Dr. Carlos Mendes"
+}
+
+###
