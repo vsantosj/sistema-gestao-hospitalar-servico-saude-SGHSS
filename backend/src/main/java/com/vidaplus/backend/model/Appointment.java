@@ -36,7 +36,7 @@ public class Appointment {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private StatusAppointment status =StatusAppointment.AGENDADO;
+    private StatusAppointment status = StatusAppointment.AGENDADO;
 
     @Column(name = "patient", length = 100, nullable = false)
     private String patient;
@@ -44,11 +44,14 @@ public class Appointment {
     @Column(name = "doctor", length = 100, nullable = false)
     private String doctor;
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
-
-
 }

@@ -1,3 +1,4 @@
+--V1__create_tables_appointments.sql
 CREATE TABLE tb_appointment(
        id SERIAL PRIMARY KEY,
        title VARCHAR(120) NOT NULL,

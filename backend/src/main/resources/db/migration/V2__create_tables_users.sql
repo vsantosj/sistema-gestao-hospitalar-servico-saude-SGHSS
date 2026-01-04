@@ -1,3 +1,4 @@
+--V2__create_tables_users.sql
 CREATE TABLE tb_user(
     id SERIAL PRIMARY KEY,
     number_register VARCHAR(255) NOT NULL,

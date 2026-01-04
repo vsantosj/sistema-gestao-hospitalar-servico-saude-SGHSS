@@ -97,7 +97,6 @@ public class AuthController {
     public ResponseEntity<?> register(@Valid @RequestBody RegisterUserRequest request) {
         System.out.println("=== TENTATIVA DE REGISTRO ===");
         System.out.println("Email: " + request.email());
-        System.out.println("Senha: " + request.password());
 
         if (userRepository.existsByEmail(request.email())) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
@@ -107,14 +106,21 @@ public class AuthController {
         User newUser = new User();
         newUser.setNumberRegister(request.numberRegister());
         newUser.setEmail(request.email());
+        newUser.setPassword(passwordEncoder.encode(request.password()));
 
-        String encodedPassword = passwordEncoder.encode(request.password());
-        System.out.println("Senha criptografada: " + encodedPassword);
-        newUser.setPassword(encodedPassword);
-        newUser.setRole(UserRole.USER);
+        // Define o role
+        UserRole role = UserRole.PATIENT; // Padrão PATIENT
+        if (request.role() != null) {
+            try {
+                role = UserRole.valueOf(request.role().toUpperCase());
+            } catch (IllegalArgumentException e) {
+                role = UserRole.PATIENT;
+            }
+        }
+        newUser.setRole(role);
 
         userRepository.save(newUser);
-        System.out.println("Usuário salvo com sucesso!");
+        System.out.println("Usuário salvo com role: " + role);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new RegisterUserResponse(newUser.getNumberRegister(), newUser.getEmail())
